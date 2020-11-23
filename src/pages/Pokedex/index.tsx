@@ -9,12 +9,14 @@ import {
   ScrollContainer,
   PokeInfo,
   PokeNumber,
+  ButtonContainer,
+  PageButton,
+  PageButtonText,
+  DisabledButton,
 } from './styles';
 
 import api from '../../services/api';
 import colors from '../../services/colors';
-
-import Icon from 'react-native-vector-icons/Feather';
 
 interface Pokemon {
   id: number;
@@ -32,10 +34,13 @@ interface Pokemon {
 
 const Pokedex: React.FC = () => {
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
-    api.get('pokemons').then(({data}) => setPokemons(data));
-  }, []);
+    api
+      .get(`pokemons?_page=${page}&_limit=5`)
+      .then(({data}) => setPokemons(data));
+  }, [page]);
 
   return (
     <>
@@ -43,11 +48,8 @@ const Pokedex: React.FC = () => {
         <HeaderTitle>Pokedex</HeaderTitle>
       </Header>
       <Container>
-        <Icon name="search" size={30} color="#fff" />
         <ScrollContainer>
           {pokemons.map(({id, name, image, types}) => {
-            // const type = ty[0];
-
             return (
               <PokeContainer
                 key={id}
@@ -65,6 +67,19 @@ const Pokedex: React.FC = () => {
             );
           })}
         </ScrollContainer>
+        <ButtonContainer>
+          {page !== 1 && (
+            <PageButton onPress={() => setPage(page - 1)}>
+              <PageButtonText>Previous page</PageButtonText>
+            </PageButton>
+          )}
+
+          {pokemons.length === 5 && (
+            <PageButton onPress={() => setPage(page + 1)}>
+              <PageButtonText>Next page</PageButtonText>
+            </PageButton>
+          )}
+        </ButtonContainer>
       </Container>
     </>
   );

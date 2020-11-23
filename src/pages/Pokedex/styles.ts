@@ -18,6 +18,34 @@ export const Container = styled.View`
   justify-content: center;
 `;
 
+export const ButtonContainer = styled.View`
+  background-color: #1a1a1a;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+`;
+
+export const PageButton = styled.TouchableOpacity`
+  background-color: #1a1a1a;
+  width: 50%;
+  height: 70px;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const DisabledButton = styled.View`
+  background-color: #a1a1a1;
+  width: 50%;
+  height: 70px;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const PageButtonText = styled.Text`
+  color: #ffffff;
+`;
+
 export const ScrollContainer = styled.ScrollView`
   width: 90%;
 `;
